@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>La Maestranza</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <!-- Estilos adicionales -->
+    <style>
+        .navbar {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 10px 0;
+        }
+        .navbar-brand {
+            color: #a0865c;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .navbar-nav .nav-link {
+            color: #a0865c !important;
+        }
+        .navbar-toggler-icon,
+        .fas {
+            color: #a0865c !important;
+        }
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            height: 60vh;
+            margin-top: 10px;
+        }
+        .empty-message {
+            font-style: italic;
+            color: #666;
+        }
+        .btn-registrar {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease; /* Transición suave */
+        }
+        .btn-registrar:hover {
+            background-color: #eccea1; /* Cambia el color al pasar el mouse */
+        }
+        .card-body {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        .precio-icon {
+            color: #007bff;
+        }
+        .filtro-barra {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .filtro-barra .form-control {
+            margin-right: 10px;
+            color: #a0865c; /* Cambio de color para el input del filtro */
+        }
+        .filtro-barra .btn {
+            margin-left: 10px;
+            background-color: #a0865c; /* Cambio de color para el botón del filtro */
+            border-color: #a0865c; /* Cambio de color para el borde del botón del filtro */
+        }
+        .filtro-barra .btn:hover {
+            background-color: #7a674b; /* Cambio de color al pasar el mouse sobre el botón del filtro */
+            border-color: #7a674b; /* Cambio de color para el borde al pasar el mouse sobre el botón del filtro */
+        }
+        .desc {
+            color: #a0865c; /* Cambio de color para el texto de descripción */
+        }
+        /* Estilos para el footer */
+        .footer {
+            background-color: #c6aa7f;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .footer a {
+            color: #fff;
+        }
+        .footer a:hover {
+            text-decoration: none;
+            color: #eccea1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar utilizando Bootstrap -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'inicio' %}">Productos <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'registrar_producto' %}">Registro</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 style="color: #a0865c;">Bienvenido al sistema de gestión de inventario</h1>
+        <p class="lead"></p>
+
+        <!-- Barra de Filtrado -->
+        <form id="filtro-form" method="get" action="{% url 'inicio' %}">
+            <div class="filtro-barra">
+                <input type="text" name="q" class="form-control" placeholder="Buscar por nombre..." style="color: #a0865c;">
+                <select name="filtro" class="form-control" style="color: #a0865c;">
+                    <option value="">Filtrar por...</option>
+                    <option value="precio">Precio</option>
+                    <option value="cantidad">Cantidad</option>
+                </select>
+                <button type="submit" class="btn btn-primary" style="background-color: #a0865c; border-color: #a0865c;">Aplicar</button>
+            </div>
+        </form>
+
+        <!-- Contador de Productos Registrados -->
+        <h2 style="color: #a0865c;">Productos Registrados: {% if productos %}{{ productos|length }}{% else %}0{% endif %}</h2>
+        
+        {% if productos %}
+            <div class="row">
+                {% for producto in productos %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 style="color: #a0865c;">{{ producto.nombre }}</h3>
+                            <p class="desc"><strong>Descripción:</strong> {{ producto.descripcion }}</p>
+                            <p class="desc"><i class="fas fa-tag precio-icon"></i> Precio: {{ producto.precio|floatformat:"0" }}</p>
+                            <p class="desc"><i class="fas fa-boxes"></i> Cantidad: {{ producto.cantidad }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <a href="{% url 'inicio' %}" class="btn btn-outline-primary btn-block mt-3">Volver a la lista</a>
+        {% endif %}
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2024 La Maestranza. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-right">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="#">Inicio</a></li>
+                        <li class="list-inline-item"><a href="#">Productos</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap y jQuery JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

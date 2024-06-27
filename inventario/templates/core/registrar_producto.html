@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Producto</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <!-- Estilos adicionales -->
+    <style>
+        .navbar {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 10px 0;
+        }
+        .navbar-brand {
+            color: #a0865c;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .navbar-nav .nav-link {
+            color: #a0865c !important;
+        }
+        .navbar-toggler-icon,
+        .fas {
+            color: #a0865c !important;
+        }
+        .card {
+            max-width: 500px;
+            margin: 0 auto; /* Centra la carta horizontalmente */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            color: #a0865c;
+        }
+        button[type="submit"] {
+            background-color: #c6aa7f;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Transición suave */
+        }
+        button[type="submit"]:hover {
+            background-color: #eccea1; /* Cambia el color al pasar el mouse */
+        }
+        .btn-volver {
+            color: #fff;
+            background-color: #d9bc90;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Transición suave */
+        }
+        .btn-volver:hover {
+            background-color: #eccea1; /* Cambia el color al pasar el mouse */
+        }
+        /* Estilos para el footer */
+        .footer {
+            background-color: #c6aa7f;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .footer a {
+            color: #fff;
+        }
+        .footer a:hover {
+            text-decoration: none;
+            color: #eccea1;
+        }
+        .title{
+            color:#a0865c;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar utilizando Bootstrap -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'inicio' %}">Productos <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'registrar_producto' %}">Registro</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="card">
+            <h1 class="title text-center"><i class="fas fa-plus-circle"></i> Registrar Producto</h1>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_nombre">Nombre:</label>
+                    {{ form.nombre }}
+                </div>
+                <div class="form-group">
+                    <label for="id_descripcion">Descripción:</label>
+                    {{ form.descripcion }}
+                </div>
+                <div class="form-group">
+                    <label for="id_precio">Precio:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                        </div>
+                        {{ form.precio }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_cantidad">Cantidad:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-boxes"></i></span>
+                        </div>
+                        {{ form.cantidad }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+            </form>
+            <a href="{% url 'inicio' %}" class="btn btn-outline-primary btn-block mt-3 btn-volver">Volver a la lista</a>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2024 La Maestranza. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-right">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="#">Inicio</a></li>
+                        <li class="list-inline-item"><a href="#">Productos</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap y jQuery JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
